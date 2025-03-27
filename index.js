@@ -28,10 +28,9 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", async (req, res) => {
   const { titulo, descricao } = req.body;
   try {
-    await Pergunta.create({ titulo, descricao });
-    res.send(
-      `Pergunta salva com sucesso! Título: ${titulo}, Descrição: ${descricao}`
-    );
+    await Pergunta.create({ titulo, descricao }).then(() => {
+      res.redirect("/");
+    });
   } catch (error) {
     console.error("Erro ao salvar pergunta:", error);
     res.status(500).send("Erro ao salvar a pergunta no banco de dados.");
